@@ -1,0 +1,38 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+Copyright (c) 2026 Cristian Gonzalo Díaz
+
+The datasets in this repository (all .jsonl files and their documentation) are
+licensed under the Creative Commons Attribution 4.0 International License.
+
+You are free to:
+
+  Share  — copy and redistribute the material in any medium or format
+  Adapt  — remix, transform, and build upon the material for any purpose,
+           even commercially.
+
+Under the following terms:
+
+  Attribution — You must give appropriate credit, provide a link to the
+  license, and indicate if changes were made. You may do so in any reasonable
+  manner, but not in any way that suggests the licensor endorses you or your
+  use.
+
+  No additional restrictions — You may not apply legal terms or technological
+  measures that legally restrict others from doing anything the license
+  permits.
+
+Full legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Suggested citation:
+
+  Díaz, Cristian Gonzalo (2026). fill-real: an execution-grounded dataset for
+  evaluating Solana trading strategies. Zenodo. [DOI PENDIENTE]
+
+DISCLAIMER
+
+This dataset describes historical market observations. It is published for
+research purposes and is not investment advice. The documented limitations —
+in particular the ~36-minute truncation of price series and the resulting
+optimistic bias in any gate-level figure — must be taken into account in any
+derived analysis.
