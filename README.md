@@ -1,5 +1,9 @@
 # fill-real
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21830480.svg)](https://doi.org/10.5281/zenodo.21830480)
+[![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
+[![License: CC BY 4.0](https://img.shields.io/badge/Data-CC%20BY%204.0-green.svg)](LICENSE-DATA)
+
 **An execution-grounded dataset for evaluating Solana trading strategies — and
 evidence that screen-price backtests are systematically biased.**
 
@@ -121,7 +125,7 @@ Published as a public good. Currently released: the report and the dataset.
 
 ## Citing
 
-If you use this dataset, please cite the Zenodo record: `[DOI PENDIENTE]`
+If you use this dataset, please cite the Zenodo record: [`10.5281/zenodo.21830480`](https://doi.org/10.5281/zenodo.21830480)
 
 ---
 
