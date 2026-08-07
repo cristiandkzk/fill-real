@@ -51,7 +51,7 @@ slippage, n=705), while the median token moves only **+8.3%** in the best
 15-minute window. When friction exceeds the asset's median move, no exit-timing
 policy can help.
 
-📄 **[Full report →](https://claude.ai/code/artifact/4ceac26b-5bce-4977-b5a4-e87f240366a9)**
+📄 **[Full report →](https://github.com/cristiandkzk/fill-real/blob/main/REPORT.md)**
 
 ---
 
