@@ -1,0 +1,25 @@
+{
+  "title": "fill-real: an execution-grounded dataset for evaluating Solana trading strategies",
+  "upload_type": "dataset",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "version": "1.0.0",
+  "language": "eng",
+  "creators": [
+    {
+      "name": "Díaz, Cristian Gonzalo",
+      "affiliation": "Independent researcher"
+    }
+  ],
+  "keywords": [
+    "Solana",
+    "market microstructure",
+    "execution quality",
+    "slippage",
+    "backtest bias",
+    "DeFi",
+    "open data",
+    "blockchain"
+  ],
+  "description": "<p><strong>Almost every publicly shared backtest of Solana token strategies is computed on screen price</strong>: the value an aggregator reports on a polling interval. The price at which an order actually executes is different, and the difference is not symmetric noise that averages out &mdash; it is a directional bias large enough to invert conclusions.</p><p>This dataset contains 22,628 post-migration positions measured with <strong>real Jupiter fills</strong>, plus order-by-order execution telemetry, collected from a live system on Solana mainnet between June and August 2026.</p><p><strong>The bias, measured three independent ways:</strong></p><ul><li>Migration-speed strategy: screen price said +36%, real fills said <strong>&minus;69%</strong> (n&asymp;24k / 21k)</li><li>Entry gate cross-check: simulated &minus;42.8%, real <strong>&minus;1.1%</strong></li><li>Exit policy calibration: simulated &minus;29.8%, real <strong>&minus;10.9%</strong></li></ul><p>The bias runs in both directions, which is what makes it dangerous. Screen price made a ruinous entry rule look profitable, and separately made reactive exit policies (stops, trailing stops) look far worse than they are &mdash; a snapshot grid fires stops on transient dips that a real order would never have paid. Screen price penalizes reactive policies and rewards illusory ones.</p><p><strong>Two further results from the same data:</strong></p><ul><li><strong>Pool liquidity does not lead price.</strong> Across 150 collapses, the median lead between a liquidity-drop threshold and a &minus;25% price drop is 0 seconds; at thresholds &ge;15%, zero cases had any warning. Price is a function of pool reserves &mdash; they are the same variable, not two signals. Median single-interval gap: 97.2 percentage points.</li><li><strong>Real round-trip friction is 11.4%</strong> (8.20% entry overhead, n=134; 3.17% exit slippage, n=705), while the median token moves only +8.3% in the best 15-minute window. When friction exceeds the asset's median move, no exit-timing policy can help.</li></ul><p><strong>Contents</strong></p><ul><li><code>grad-social-shadow.jsonl</code> &mdash; 23,265 rows. Post-migration positions with real Jupiter fills.</li><li><code>liquidity-track.jsonl</code> &mdash; 45,826 rows. Liquidity and price series per position.</li><li><code>exit-slippage.jsonl</code> &mdash; 705 rows. Real exit slippage, order by order.</li><li><code>entry-exec.jsonl</code> &mdash; 547 rows. Entry overhead: fill vs. decision price.</li></ul><p><strong>LIMITATIONS &mdash; read before using</strong></p><p><strong>1. Price series truncate at ~36 minutes.</strong> Median series length is 36 min, p90 is 36 min, and 0% reach 60 min. The hard-stop exit &mdash; which accounts for &minus;31 of the &minus;36 percentage points lost in the base population &mdash; partly lives past that cutoff. Any gate-level figure computed from this data is biased optimistic by an amount that is not yet bounded. Extended-horizon collection is in progress.</p><p><strong>2. The schema changes over time.</strong> Older rows lack <code>screenMult</code> and <code>exitImpactPct</code>; newer rows lack <code>devBuySol</code>, <code>migrateDelayMin</code> and the <code>adaptive*</code> fields. Any loader must tolerate missing keys.</p><p><strong>3. Single-operator data.</strong> Execution telemetry comes from one wallet's order flow. Fill quality may differ at other order sizes. Sizes and observed price impact are published so transferability can be judged.</p><p><strong>Privacy:</strong> the dataset contains no wallets, no keys and no transaction signatures. Token mints and creator addresses are public on-chain data.</p><p><strong>Not investment advice.</strong> Published for research purposes.</p>"
+}
