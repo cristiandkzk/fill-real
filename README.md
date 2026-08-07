@@ -123,6 +123,13 @@ Published as a public good. Currently released: the report and the dataset.
 
 ---
 
+## Where to get it
+
+- **Hugging Face** (loader in two lines): https://huggingface.co/datasets/crdkzk/fill-real
+- **Zenodo** (archived, citable): https://doi.org/10.5281/zenodo.21830480
+
+---
+
 ## Citing
 
 If you use this dataset, please cite the Zenodo record: [`10.5281/zenodo.21830480`](https://doi.org/10.5281/zenodo.21830480)
