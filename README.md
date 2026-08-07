@@ -55,6 +55,20 @@ policy can help.
 
 ---
 
+## Who this is for
+
+- **Researchers backtesting Solana/memecoin strategies** who need real execution
+  prices instead of screen prices to trust their results.
+- **Quant teams and DeFi tooling builders** evaluating whether screen-price bias
+  affects their own pipeline — the method here is reusable on any dataset.
+- **Anyone citing a Solana backtest** who wants to sanity-check it against paired
+  screen-vs-fill numbers before relying on it.
+
+Not what this is: a trading strategy, a signal, or a multi-chain dataset. It is
+measurement of one execution channel (Jupiter, Solana) — scoped and stated as such.
+
+---
+
 ## The data
 
 | File | Rows | Contents |
