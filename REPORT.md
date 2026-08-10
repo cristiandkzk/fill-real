@@ -122,6 +122,55 @@ a minute, with volume rising in the same window.
 
 ---
 
+## Two more ways the screen number lies (August)
+
+Two results from the weeks after release. Both are the same bias, arriving by
+routes the sections above do not cover.
+
+### A holding period too short to pay for itself
+
+A "quick flip" policy — buy 45 seconds after migration, sell 30 seconds later,
+no price stop — is attractive precisely because it looks like it barely touches
+the market. Measured on screen price across **31,144 graduations**, the median
+30-second move is **+0.75%**, and 54.9% of tokens are up at the bell. On a
+screen backtest it prints a small, steady edge.
+
+Round-trip execution cost, measured on real fills of that exact policy
+(n=11 executions — small, but a cost is far more stable than a return), has a
+median of **1.26 percentage points**. The median flip therefore loses before any
+adverse selection: the screen number and the executable number have opposite
+signs, and the gap is the entire result.
+
+The horizon is not the fix. Sweeping it: 15s **+0.75%**, 30s **+0.75%**,
+60s **+0.43%**, 120s **−3.60%**, 300s **−16.46%**. Nothing before 60s is large
+enough to clear the cost, and after that the move itself turns negative. A
+strategy can be structurally unprofitable at *every* setting of its main knob,
+and a screen backtest will still show a plausible-looking positive median.
+
+### A filter that "works" on one unsellable token
+
+A rejection rule — skip candidates already up more than 50% in 24h — separates
+its population cleanly on screen:
+
+| | n | mean | 95% CI |
+|---|---:|---:|---|
+| what it rejects | 340 | −10.60% | −16.96 / −3.77 |
+| what it keeps | 839 | **+141.38%** | −2.66 / +427.88 |
+
+The rejected side is reliably negative. The kept side looks spectacular, and its
+confidence interval is the tell: it crosses zero by a mile, because **the entire
++141% is one token at +119,630%** — a 1196x, on screen, in a pool nobody could
+have exited at that price. Trim the top 1% and the kept side is **−2.31%
+(−4.12 / −0.50): reliably negative too.**
+
+So the rule does not separate good from bad. It separates bad from slightly less
+bad, and a screen-price mean dressed the second bucket up as an edge.
+
+> A fat-tailed screen distribution can make any filter look like alpha. Before
+> asking for more data, trim the tail — it is free, and it answers first.
+
+---
+
 ## Why believe this
 
 The obvious risk in two months of analysis over the same datasets is **data
