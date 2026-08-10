@@ -73,12 +73,12 @@ measurement of one execution channel (Jupiter, Solana) — scoped and stated as 
 
 | File | Rows | Contents |
 |---|---:|---|
-| `grad-social-shadow.jsonl` | 23,265 | Post-migration positions with real Jupiter fills |
-| `liquidity-track.jsonl` | 45,826 | Liquidity and price series per position |
-| `exit-slippage.jsonl` | 705 | Real exit slippage, order by order |
-| `entry-exec.jsonl` | 547 | Entry overhead: fill vs. decision price |
+| `grad-social-shadow.jsonl` | 26,180 | Post-migration positions with real Jupiter fills |
+| `liquidity-track.jsonl` | 54,522 | Liquidity and price series per position |
+| `exit-slippage.jsonl` | 718 | Real exit slippage, order by order |
+| `entry-exec.jsonl` | 558 | Entry overhead: fill vs. decision price |
 
-Total ~14 MB. Collected June–August 2026 from a live system on Solana mainnet.
+Total ~28 MB. Collected June–August 2026 from a live system on Solana mainnet.
 
 **Privacy:** the dataset contains no wallets, no keys and no transaction
 signatures — the `wallet` and `signature` fields present in the raw collection
