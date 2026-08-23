@@ -1,0 +1,62 @@
+{
+  "dataset": "fill-real",
+  "version": "2.0.0",
+  "built_at": "2026-08-21T21:56:42.237286+00:00",
+  "files": [
+    {
+      "file": "grad-social-shadow.jsonl",
+      "rows": 37401,
+      "bytes": 21988365,
+      "sha256": "8593667a4667be02c6f2225ecc1f2adf9bbee112807b837f2d0ca27c2cccc6d2",
+      "description": "Post-migration positions with real Jupiter fills, plus ex-ante features (liquidity, buyers, creator history, dev buy, social presence)."
+    },
+    {
+      "file": "grad-early-shadow.jsonl",
+      "rows": 38503,
+      "bytes": 17493740,
+      "sha256": "a9ff8eda69261ac622753d2c908631f78ffeb5cfabc3a5269920f56652f34c24",
+      "description": "Exit-policy grid evaluated on the same positions: each row is one (position, exit configuration) pair with its realised return."
+    },
+    {
+      "file": "liquidity-track.jsonl",
+      "rows": 65861,
+      "bytes": 15139695,
+      "sha256": "dec311664eba48ca4858de55a87ddf1b140257c08af7cb7b75deb1a45e3d0301",
+      "description": "Liquidity, price, FDV and 24h flow series per tracked position."
+    },
+    {
+      "file": "exit-slippage.jsonl",
+      "rows": 922,
+      "bytes": 322185,
+      "sha256": "0a8e72cbb5516da7a189a9667671e12c43182c9191f1edf275af910ccfee6b25",
+      "description": "Real exit slippage, order by order: quoted output vs mark-to-market."
+    },
+    {
+      "file": "entry-exec.jsonl",
+      "rows": 759,
+      "bytes": 287608,
+      "sha256": "c4af05684742c5c933a56916684cfc2f043cdc985afef832eea20b42c7cf3724",
+      "description": "Entry overhead, order by order: fill price vs decision price. Sanitized -- wallet and signature removed.",
+      "sanitized_rows": 759,
+      "fields_removed": [
+        "signature",
+        "wallet"
+      ]
+    },
+    {
+      "file": "survivor-shadow.jsonl",
+      "rows": 597,
+      "bytes": 211847,
+      "sha256": "e7562b418edd0e1dcc0b246493d50ab6820c13e5c363549e02c878019e428ee9",
+      "description": "Independent survivor-strategy evaluations. Joins to the graduation population by mint, enabling the cross-strategy condition."
+    },
+    {
+      "file": "grad-entry-shape.jsonl.gz",
+      "rows": 1602508,
+      "bytes": 21942661,
+      "sha256": "42bf866e99edacc949472f04a135929c56f0a3fa2cf3fce826585357c0e274a7",
+      "description": "Post-migration price trajectories: one row per (mint, seconds since migration, price). The raw shape behind every outcome above."
+    }
+  ],
+  "total_rows": 1746551
+}

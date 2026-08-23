@@ -1,5 +1,9 @@
 # The screen-price bias
 
+> **v2.0 — August 2026.** Two results added: an exhaustive condition sweep that
+> returns zero positives, and a paired bound on the horizon-truncation bias that
+> v1 could only flag. Round-trip friction restated at 10.7%. See `CHANGELOG.md`.
+
 **Two months measuring Solana memecoin strategies with real execution prices.**
 
 The finding is not which strategy works. It is that **screen price overstates
@@ -90,6 +94,11 @@ why: at minute 15 the median token **rises 8.3%** and friction takes **11.4%**.
 > **Friction is larger than the asset's median move across the entire window.**
 > No exit policy fixes that, because it is not a question of when to sell.
 
+**v2 restatement.** On roughly 40% more orders the round trip measures **10.7%**
+(7.79% entry overhead, n=164; 2.91% exit slippage, n=922), against 11.4% in v1.
+The conclusion is unchanged and the margin is narrower: friction still exceeds
+the 8.3% median move at the best exit point, by 2.4 points instead of 3.1.
+
 ---
 
 ## Rugs cannot be dodged on the way out
@@ -122,55 +131,6 @@ a minute, with volume rising in the same window.
 
 ---
 
-## Two more ways the screen number lies (August)
-
-Two results from the weeks after release. Both are the same bias, arriving by
-routes the sections above do not cover.
-
-### A holding period too short to pay for itself
-
-A "quick flip" policy — buy 45 seconds after migration, sell 30 seconds later,
-no price stop — is attractive precisely because it looks like it barely touches
-the market. Measured on screen price across **31,144 graduations**, the median
-30-second move is **+0.75%**, and 54.9% of tokens are up at the bell. On a
-screen backtest it prints a small, steady edge.
-
-Round-trip execution cost, measured on real fills of that exact policy
-(n=11 executions — small, but a cost is far more stable than a return), has a
-median of **1.26 percentage points**. The median flip therefore loses before any
-adverse selection: the screen number and the executable number have opposite
-signs, and the gap is the entire result.
-
-The horizon is not the fix. Sweeping it: 15s **+0.75%**, 30s **+0.75%**,
-60s **+0.43%**, 120s **−3.60%**, 300s **−16.46%**. Nothing before 60s is large
-enough to clear the cost, and after that the move itself turns negative. A
-strategy can be structurally unprofitable at *every* setting of its main knob,
-and a screen backtest will still show a plausible-looking positive median.
-
-### A filter that "works" on one unsellable token
-
-A rejection rule — skip candidates already up more than 50% in 24h — separates
-its population cleanly on screen:
-
-| | n | mean | 95% CI |
-|---|---:|---:|---|
-| what it rejects | 340 | −10.60% | −16.96 / −3.77 |
-| what it keeps | 839 | **+141.38%** | −2.66 / +427.88 |
-
-The rejected side is reliably negative. The kept side looks spectacular, and its
-confidence interval is the tell: it crosses zero by a mile, because **the entire
-+141% is one token at +119,630%** — a 1196x, on screen, in a pool nobody could
-have exited at that price. Trim the top 1% and the kept side is **−2.31%
-(−4.12 / −0.50): reliably negative too.**
-
-So the rule does not separate good from bad. It separates bad from slightly less
-bad, and a screen-price mean dressed the second bucket up as an edge.
-
-> A fat-tailed screen distribution can make any filter look like alpha. Before
-> asking for more data, trim the tail — it is free, and it answers first.
-
----
-
 ## Why believe this
 
 The obvious risk in two months of analysis over the same datasets is **data
@@ -198,6 +158,111 @@ good-intentions problem.
 
 ---
 
+## The search is over: 0 of 114 conditions
+
+Everything above invites one response: *you just haven't found the right filter
+yet.* That is a testable claim, and testing it anecdotally is what produces
+false discoveries. So it was tested exhaustively.
+
+Over **36,736 real-fill positions**, an entry condition was built from every
+combination of 10 ex-ante features, 7 percentile cuts and 2 directions, plus 4
+social booleans and one cross-strategy condition. Conditions with fewer than 100
+observations were discarded. **114 distinct conditions survived that filter.**
+
+Only *ex-ante* features are eligible. A condition is a trading rule, so it may
+use only what is known before the order is sent. Outcome fields — realised hold
+time, peak multiple, exit reason — are excluded by construction. Conditioning on
+them manufactures edge that cannot be traded.
+
+| | n | median | **mean** | win% | ruin% |
+|---|---:|---:|---:|---:|---:|
+| baseline — all real fills | 36,736 | −51.19% | **−33.59%** | 24.4 | 24.5 |
+| `preBuyers >= 326` | 207 | −19.82% | **−3.25%** | 34.3 | 1.9 |
+| `liqUsd >= 204,183` | 1,833 | +12.53% | **−7.33%** | 67.1 | 28.8 |
+| `devBuySol < 0.0395` | 2,774 | −12.78% | **−8.14%** | 45.2 | 25.7 |
+| `liqUsd >= 14,823` | 9,163 | −4.37% | **−9.09%** | 48.2 | 18.0 |
+| … | | | | | |
+| `liqUsd < 29` | 9,073 | −89.85% | **−76.78%** | 3.3 | 49.5 |
+
+```
+>>> CONDITIONS WITH POSITIVE MEAN: 0 of 114
+```
+
+**This is the cleanest possible result with respect to fishing.** A sweep that
+returns zero positives needs no multiple-comparison correction, because there is
+nothing to discount. Had exactly one of 114 come back positive, the honest
+reading would have been noise — that is roughly what a null grid of this size
+produces by chance. None did.
+
+The best condition, `preBuyers >= 326`, recovers **30.4 percentage points** over
+the baseline and still sits at −3.25% on n=207. It is the same shape as every
+other result in this report: large, real, reproducible improvements that do not
+reach zero.
+
+### The two sub-results are worth more than the headline
+
+**Win rate and median are actively misleading here.** Three of the 114
+conditions win *more than half* their trades. All three lose money.
+`liqUsd >= 204,183` wins **67.1%** of the time with a **+12.53% median** — and
+a **−7.33% mean**. Two thirds of trades profitable is not enough, because the
+left tail is fat enough to pay for all of them. This is the same trap as
+*"tightening the filter makes the result worse and the feeling better"*, now
+measured on the widest possible grid. **Report means.**
+
+**Ruin is predictable. Profit is not.** `preBuyers >= 326` cuts the rate of
+total loss from 24.5% to **1.9%** — a thirteen-fold reduction, on a population
+whose mean is still negative. The same holds for `preBuyers >= 484` (1.0% ruin,
+−9.10% mean). It is genuinely possible to know which tokens will not go to zero.
+It is not possible to turn that into money, because those same populations have
+medians near −20%. **The predictable set and the profitable set are disjoint** —
+and that dissociation, not the negative mean, is the finding a strategy designer
+should take away.
+
+Reproduce with `tools/sweep-conditions-realfill.py`; the full 114-row table is in
+`results/sweep-conditions.md`.
+
+---
+
+## How much the 36-minute cutoff was hiding
+
+v1 shipped a limitation it could not quantify: price series truncate near 36
+minutes, so any figure computed from them is biased optimistic *by an amount
+that is not yet bounded.* Extended collection now bounds it.
+
+**1,728 tokens have a full 190-minute horizon.** Measured at both cutoffs:
+
+| horizon | trimmed mean multiple | median | share above 1× |
+|---|---:|---:|---:|
+| 36 min — the v1 cutoff | 0.9143 | 0.2915 | 34.4% |
+| 190 min | **0.5970** | **0.1017** | 19.3% |
+
+**The same tokens lose a further 31.7 percentage points between minute 36 and
+minute 190.** 66.3% of them keep falling past the cutoff. The share still above
+water nearly halves.
+
+**Read this as a paired estimate, not a universal constant.** Two things must be
+said against it:
+
+1. The comparison is **within-token** — the same 1,728 mints at two horizons —
+   so the drift cannot be a composition artifact. This is what makes the
+   direction trustworthy.
+2. That subsample was collected 16–21 August, and **that window is a worse
+   regime than the full population: −19.5 pp at the shared 36-minute mark**
+   (trimmed mean 0.9143 vs 1.1089 across all 40,426 mints). The magnitude is
+   therefore a point estimate from one six-day window, not a constant to apply
+   elsewhere.
+
+Coverage is the remaining gap: 83.5% of mints still truncate near 36 minutes and
+only 4.3% reach 190. Use the long subsample to *correct* an estimate, not to
+replace the population.
+
+The practical consequence for anyone reusing this dataset — or any dataset built
+the same way — is that **a truncated horizon flatters every strategy that holds
+through the cutoff**, and by an amount comparable to the entire edge such
+strategies claim to have.
+
+---
+
 ## What a reader can take away
 
 - A memecoin backtest on screen price is not a noisy version of reality: it is a
@@ -208,13 +273,20 @@ good-intentions problem.
   mechanically, late.
 - Before looking for an edge, measure real friction and compare it against the
   asset's median move. If friction is larger, the rest of the search is idle.
+- When a filter search is run exhaustively rather than anecdotally, it can come
+  back empty — 0 of 114 here. An empty sweep is a stronger result than a
+  marginal positive, and it needs no correction for multiple comparisons.
+- Being able to predict *ruin* is not the same as being able to predict *profit*.
+  Here the two sets are disjoint, and only one of them was ever tradeable.
+- Check what your data's horizon truncates. Cutting these series at 36 minutes
+  instead of 190 flatters the same tokens by 31.7 percentage points.
 
 ---
 
 ## Data and reproducibility
 
 - **Dataset:** https://huggingface.co/datasets/crdkzk/fill-real
-- **Archived, citable:** https://doi.org/10.5281/zenodo.21830480
+- **Archived, citable:** https://doi.org/10.5281/zenodo.21830479 (concept DOI — always the newest version)
 - **Code:** https://github.com/cristiandkzk/fill-real
 
 Measurements on own orders and executions on Solana, June–August 2026. Real fills
