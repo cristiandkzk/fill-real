@@ -13,8 +13,8 @@ found.
 | | |
 |---|---|
 | **22,628** | graduations with real Jupiter fills |
-| **18–40pp** | screen-vs-fill gap, three measurements |
-| **11.4%** | real round-trip friction |
+| **18–105pp** | screen-vs-fill gap, three measurements |
+| **10.7%** | real round-trip friction (v2; 11.4% in v1, see restatement below) |
 
 ---
 

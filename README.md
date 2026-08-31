@@ -9,6 +9,12 @@ reproduce it.
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/Data-CC%20BY%204.0-green.svg)](LICENSE-DATA)
 
+**[Live dashboard — what execution actually costs on Solana →](https://dune.com/crdkzk1748/execution-cost-on-solana-the-median-pays-nothing-the-tail-pays-858x)**
+(1.5M Jupiter swaps, empirical benchmark, every query forkable) ·
+[Data on Hugging Face](https://huggingface.co/datasets/crdkzk/fill-real) ·
+[Full report](REPORT.md) ·
+[cristiandkzk@gmail.com](mailto:cristiandkzk@gmail.com)
+
 Backtests are almost always computed on *quoted price*: the value an aggregator
 reports on a polling interval. It is what is available, and it looks reasonable.
 The price at which an order **actually executes** is different — and the
@@ -238,6 +244,17 @@ tooling that reproduces the headline results.
 
 ---
 
+## Related work
+
+**[solana-exec-bench](https://dune.com/crdkzk1748/execution-cost-on-solana-the-median-pays-nothing-the-tail-pays-858x)** —
+the same question asked of the whole market rather than of memecoins: what does
+execution actually cost, measured on 1.5M Jupiter swaps against an empirical
+per-minute benchmark. The median trade pays essentially nothing at any size; the
+p90 spans 858× between a stablecoin pair and PUMP. Live dashboard, every query
+forkable in one click.
+
+---
+
 ## Citing
 
 Cite the concept DOI unless you need to pin a specific release:
@@ -262,7 +279,11 @@ version DOI from the release you downloaded.
 
 ## Author
 
-**Cristian Gonzalo Díaz** — [@cristiandkzk](https://github.com/cristiandkzk)
+**Cristian Gonzalo Díaz** — [@cristiandkzk](https://github.com/cristiandkzk) ·
+[cristiandkzk@gmail.com](mailto:cristiandkzk@gmail.com)
+
+If you measure execution on Solana — at a venue, an aggregator or a desk — and
+this method is useful to you, or wrong, write to me. Both are worth the email.
 
 Built and operated the instrumented system this data comes from: live Solana
 trading infrastructure with parallel shadow evaluation and real-fill measurement
