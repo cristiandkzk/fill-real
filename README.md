@@ -9,17 +9,16 @@ reproduce it.
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
 [![License: CC BY 4.0](https://img.shields.io/badge/Data-CC%20BY%204.0-green.svg)](LICENSE-DATA)
 
-**[Live dashboard — what execution actually costs on Solana →](https://dune.com/crdkzk1748/execution-cost-on-solana-the-median-pays-nothing-the-tail-pays-858x)**
-(1.5M Jupiter swaps, empirical benchmark, every query forkable) ·
-[Data on Hugging Face](https://huggingface.co/datasets/crdkzk/fill-real) ·
-[Full report](REPORT.md) ·
-[cristiandkzk@gmail.com](mailto:cristiandkzk@gmail.com)
+**An execution-grounded dataset for evaluating Solana trading strategies — and
+evidence that screen-price backtests are systematically biased.**
 
-Backtests are almost always computed on *quoted price*: the value an aggregator
-reports on a polling interval. It is what is available, and it looks reasonable.
-The price at which an order **actually executes** is different — and the
-difference is not symmetric noise that averages out. It is directional, and it is
-large enough to invert conclusions.
+Almost every publicly shared backtest of Solana token strategies is computed on
+*screen price*: the value an aggregator reports on a polling interval. It is what
+is available, and it looks reasonable.
+
+The price at which an order **actually executes** is different. The difference is
+not symmetric noise that averages out — it is a directional bias, and it is large
+enough to invert conclusions.
 
 Three results, each with a reproducible script and the raw data behind it:
 
@@ -238,20 +237,7 @@ tooling that reproduces the headline results.
 ## Where to get it
 
 - **Hugging Face** (loader in two lines): https://huggingface.co/datasets/crdkzk/fill-real
-- **Zenodo** (archived, citable): https://doi.org/10.5281/zenodo.21830479 — this is the
-  *concept* DOI and always resolves to the newest version. Each release also gets its own
-  version DOI ([v1.0.0](https://doi.org/10.5281/zenodo.21830480)) if you need to pin one.
-
----
-
-## Related work
-
-**[solana-exec-bench](https://dune.com/crdkzk1748/execution-cost-on-solana-the-median-pays-nothing-the-tail-pays-858x)** —
-the same question asked of the whole market rather than of memecoins: what does
-execution actually cost, measured on 1.5M Jupiter swaps against an empirical
-per-minute benchmark. The median trade pays essentially nothing at any size; the
-p90 spans 858× between a stablecoin pair and PUMP. Live dashboard, every query
-forkable in one click.
+- **Zenodo** (archived, citable): https://doi.org/10.5281/zenodo.21830480
 
 ---
 
